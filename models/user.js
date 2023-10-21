@@ -93,7 +93,7 @@ userSchema.pre("save", async function (next) {
  next();
 });
 
-const User = new mongoose.model("User", userSchema);
+
 
 userSchema.methods.correctPassword = async function (
     candidatePassword,
@@ -131,3 +131,6 @@ userSchema.methods.correctPassword = async function (
     // FALSE MEANS NOT CHANGED
     return false;
   };
+
+  const User = new mongoose.model("User", userSchema);
+  module.exports = User;
