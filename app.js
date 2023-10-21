@@ -4,6 +4,7 @@ const morgan = require("morgan"); // HTTP request logger middleware for node.js
 
 const app = express();
 
+const routes = require("./routes/index");
 
 const rateLimit = require("express-rate-limit"); // Basic rate-limiting middleware for Express. Use to limit repeated requests to public APIs and/or endpoints such as password reset.
 const helmet = require("helmet"); // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
@@ -65,4 +66,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(mongosanitize());
 
   app.use(xss());
+
+  app.use(routes);
  module.exports = app;
