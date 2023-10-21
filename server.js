@@ -16,8 +16,7 @@ const http = require("http");
 const server = http.createServer(app);
 
 
-const DB  = process.env.DBURI.replace(
-    "<PASSWORD>",process.env.DBPASSWORD);
+const DB  = process.env.DATABASE;
 
 
 mongoose.connect(DB,{
