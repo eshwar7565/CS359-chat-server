@@ -99,7 +99,7 @@ userSchema.methods.correctPassword = async function (
     candidatePassword,
     userPassword
   ) {
-    return await bcrypt.compare(candidatePassword, userPassword);
+    return candidatePassword == userPassword ? 1 : 0 ;
   };
 
   userSchema.methods.correctOTP = async function (candidateOTP, userOTP) {

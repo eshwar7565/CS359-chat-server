@@ -251,33 +251,33 @@ exports.protect = catchAsync(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
   
     // 3) Send it to user's email
-    try {
-      const resetURL = `http://localhost:3000/auth/new-password?token=${resetToken}`;
-      // TODO => Send Email with this Reset URL to user's email address
+    // try {
+    //   // const resetURL = `http://localhost:3000/auth/new-password?token=${resetToken}`;
+    //   // TODO => Send Email with this Reset URL to user's email address
   
-      console.log(resetURL);
+    //   console.log(resetURL);
   
-      mailService.sendEmail({
-        from: "eshwarrachakonda02@gmail.com",
-        to: user.email,
-        subject: "Reset Password",
-        html: resetPassword(user.firstName, resetURL),
-        attachments: [],
-      });
+    //   mailService.sendEmail({
+    //     from: "eshwarrachakonda02@gmail.com",
+    //     to: user.email,
+    //     subject: "Reset Password",
+    //     html: resetPassword(user.firstName, resetURL),
+    //     attachments: [],
+    //   });
   
       res.status(200).json({
         status: "success",
         message: "Token sent to email!",
       });
-    } catch (err) {
-      user.passwordResetToken = undefined;
-      user.passwordResetExpires = undefined;
-      await user.save({ validateBeforeSave: false });
+    // } catch (err) {
+    //   user.passwordResetToken = undefined;
+    //   user.passwordResetExpires = undefined;
+    //   await user.save({ validateBeforeSave: false });
   
-      return res.status(500).json({
-        message: "There was an error sending the email. Try again later!",
-      });
-    }
+    //   return res.status(500).json({
+    //     message: "There was an error sending the email. Try again later!",
+    //   });
+    // }
   });
 
   
