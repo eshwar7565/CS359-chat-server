@@ -20,10 +20,9 @@ const DB  = process.env.DATABASE;
 
 
 mongoose.connect(DB,{
-    // useNewUrlParser : true ,
-    // useCreateIndex : true ,
-    // useFindAndModify :false ,
-     // useUnifiedTopology: true, // Set to true to opt in to using the MongoDB driver's new connection management engine. You should set this option to true , except for the unlikely case that it prevents you from maintaining a stable connection.
+    useNewUrlParser: true,
+   
+     useUnifiedTopology: true, // Set to true to opt in to using the MongoDB driver's new connection management engine. You should set this option to true , except for the unlikely case that it prevents you from maintaining a stable connection.
 
 
 })
@@ -34,7 +33,7 @@ const port = process.env.PORT || 8000;
 
 server.listen(port, () => {
     console.log(`App running on port ${port} ...`);
-});
+});  
 
 process.on("unhandledRejection", (err) => {
     console.log(err);
