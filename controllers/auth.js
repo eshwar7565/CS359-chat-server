@@ -9,14 +9,9 @@ const filterObj = require("../utils/filterObj");
 
 const signToken = (userId) => jwt.sign({ userId }, process.env.JWT_SECRET);
 
-const token = signToken(user._id);
 
-res.status(200).json({
-    status: "success",
-    message: "OTP verified Successfully!",
-    token,
-    user_id: user._id,
-});
+
+const catchAsync = require("../utils/catchAsync.js");
 
 
 // Register New User
