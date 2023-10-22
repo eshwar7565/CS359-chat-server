@@ -77,6 +77,19 @@ const userSchema = new mongoose.Schema({
     {
         type : Date ,
     }
+    ,
+    socket_id:
+    {
+        type :String,
+    },
+    firends :
+    [
+       {
+            type : mongoose.Schema.ObjectId ,
+            ref : "User" ,
+       } 
+    ]
+    ,
 
 
 });

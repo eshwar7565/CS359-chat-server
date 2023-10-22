@@ -5,15 +5,27 @@ const mongoose = require("mongoose");
 
 dotenv.config({ path: "./config.env" });
 
+
+
 process.on("uncaughtException", (err) => {
     console.log(err);
     console.log("UNCAUGHT Exception! Shutting down ...");
     process.exit(1); // Exit Code 1 indicates that a container shut down, either because of an application failure.
 });
 
+const { Server } = require("socket.io"); // Add this
 const http = require("http");
 
 const server = http.createServer(app);
+
+const User = require("./models/user");
+
+const io = new Server(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+    },
+  });
 
 
 const DB  = process.env.DATABASE;
@@ -35,10 +47,45 @@ server.listen(port, () => {
     console.log(`App running on port ${port} ...`);
 });  
 
+// Add this
+// Listen for when the client connects via socket.io-client
+io.on("connection", async (socket) => {
+    console.log(JSON.stringify(socket.handshake.query));
+    const user_id = socket.handshake.query["user_id"];
+  
+    console.log(`User connected ${socket.id}`);
+  
+    if (user_id) {
+      
+       await User.findByIdAndUpdate(user_id, {socket_id: socket.id,});
+     
+    }
+
+     // We can write our socket event listeners in here...
+  socket.on("friend_request", async (data) => {
+    const to = await User.findById(data.to).select("socket_id");
+    const from = await User.findById(data.from).select("socket_id");
+
+    // create a friend request
+    await FriendRequest.create({
+      sender: data.from,
+      recipient: data.to,
+    });
+    // emit event request received to recipient
+    io.to(to?.socket_id).emit("new_friend_request", {
+      message: "New friend request received",
+    });
+    io.to(from?.socket_id).emit("request_sent", {
+      message: "Request Sent successfully!",
+    });
+  });
+});
 process.on("unhandledRejection", (err) => {
     console.log(err);
     console.log("UNHANDLED REJECTION! Shutting down ...");
     server.close(() => {
         process.exit(1); //  Exit Code 1 indicates that a container shut down, either because of an application failure.
     });
+
+
 });
