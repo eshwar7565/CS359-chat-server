@@ -110,6 +110,52 @@ server.listen(port, () => {
 //             message: "Friend Request Accepted",
 //         });
 //     });
+// socket.on("get_direct_conversations", async ({ user_id }, callback) => {
+//     const existing_conversations = await OneToOneMessage.find({
+//       participants: { $all: [user_id] },
+//     }).populate("participants", "firstName lastName avatar _id email status");
+
+//     // db.books.find({ authors: { $elemMatch: { name: "John Smith" } } })
+
+//     console.log(existing_conversations);
+
+//     callback(existing_conversations);
+//   });
+
+
+// socket.on("start_conversation", async (data) => {
+//     // data: {to: from:}
+
+//     const { to, from } = data;
+
+//     // check if there is any existing conversation
+
+//     const existing_conversations = await OneToOneMessage.find({
+//       participants: { $size: 2, $all: [to, from] },
+//     }).populate("participants", "firstName lastName _id email status");
+
+//     console.log(existing_conversations[0], "Existing Conversation");
+
+//     // if no => create a new OneToOneMessage doc & emit event "start_chat" & send conversation details as payload
+//     if (existing_conversations.length === 0) {
+//       let new_chat = await OneToOneMessage.create({
+//         participants: [to, from],
+//       });
+
+//       new_chat = await OneToOneMessage.findById(new_chat).populate(
+//         "participants",
+//         "firstName lastName _id email status"
+//       );
+
+//       console.log(new_chat);
+
+//       socket.emit("start_chat", new_chat);
+//     }
+//     // if yes => just emit event "start_chat" & send conversation details as payload
+//     else {
+//       socket.emit("start_chat", existing_conversations[0]);
+//     }
+//   });
 
 //     // Handle incoming text/link messages
 //     socket.on("text_message", async (data) => {
