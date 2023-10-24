@@ -8,7 +8,7 @@ const User = require("../models/user");
 const filterObj = require("../utils/filterObj");
 
 const signToken = (userId) => jwt.sign({ userId }, process.env.JWT_SECRET);
-
+const { promisify } = require("util");
 
 
 const catchAsync = require("../utils/catchAsync.js");

@@ -82,7 +82,7 @@ const userSchema = new mongoose.Schema({
     {
         type :String,
     },
-    firends :
+    friends :
     [
        {
             type : mongoose.Schema.ObjectId ,
