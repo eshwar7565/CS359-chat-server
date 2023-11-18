@@ -57,11 +57,11 @@ io.on("connection", async (socket) => {
     const user_id = socket.handshake.query["user_id"];
 
     console.log(`User connected ${socket.id}`);
-
+ 
     if (user_id != null && Boolean(user_id)) {
 
         await User.findByIdAndUpdate(user_id, { socket_id: socket.id, status: "Online" });
- 
+  
     }
 
     // We can write our socket event listeners in here...
@@ -71,7 +71,7 @@ io.on("connection", async (socket) => {
 
         // create a friend request
         await FriendRequest.create({
-            sender: data.from,
+            sender: data.from,  
             recipient: data.to,
         });
         // emit event request received to recipient

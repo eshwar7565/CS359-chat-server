@@ -16,4 +16,4 @@ router.get("/get-friends", authController.protect, userController.getFriends);
 // router.post("/start-video-call", authController.protect, userController.startVideoCall);
 
 
-module.exports = router;
+module.exports = router; 

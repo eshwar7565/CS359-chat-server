@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/eshwa/OneDrive/Desktop/SEM5/4-CN/project/chat-server/utils",
-      "program": "c:/Users/eshwa/OneDrive/Desktop/SEM5/4-CN/project/chat-server/utils/build/Debug/outDebug",
+      "cwd": "//wsl.localhost/Ubuntu/home/eshwar/cn",
+      "program": "//wsl.localhost/Ubuntu/home/eshwar/cn/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
