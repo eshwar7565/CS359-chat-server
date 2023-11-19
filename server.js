@@ -1,5 +1,5 @@
 const app = require("./app");
-
+const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv")
 const mongoose = require("mongoose");
 
@@ -13,10 +13,12 @@ process.on("uncaughtException", (err) => {
     process.exit(1); // Exit Code 1 indicates that a container shut down, either because of an application failure.
 });
 
-const { Server } = require("socket.io"); // Add this
-const http = require("http");
 
+const http = require("http");
 const server = http.createServer(app);
+
+const { Server } = require("socket.io"); // Add this
+const { promisify } = require("util");
 
 const User = require("./models/user");
 const FriendRequest = require("./models/friendRequest");
@@ -36,10 +38,7 @@ const DB = process.env.DATABASE;
 
 mongoose.connect(DB, {
     useNewUrlParser: true,
-
     useUnifiedTopology: true, // Set to true to opt in to using the MongoDB driver's new connection management engine. You should set this option to true , except for the unlikely case that it prevents you from maintaining a stable connection.
-
-
 })
     .then((con) => {
         console.log("DB Connection successful");
@@ -60,7 +59,14 @@ io.on("connection", async (socket) => {
  
     if (user_id != null && Boolean(user_id)) {
 
-        await User.findByIdAndUpdate(user_id, { socket_id: socket.id, status: "Online" });
+        try {
+            User.findByIdAndUpdate(user_id, {
+              socket_id: socket.id,
+              status: "Online",
+            });
+          } catch (e) {
+            console.log(e);
+          }
   
     }
  
