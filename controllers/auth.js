@@ -1,11 +1,14 @@
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 const crypto = require("crypto");
-const otp = require("../Templates/Mail/otp");
-const mailService = require("../services/mailer")
-const User = require("../models/user");
+const mailService = require("../services/mailer");
+
 
 const filterObj = require("../utils/filterObj");
+
+const User = require("../models/user");
+const otp = require("../Templates/Mail/otp");
+
 
 const signToken = (userId) => jwt.sign({ userId }, process.env.JWT_SECRET);
 const { promisify } = require("util");

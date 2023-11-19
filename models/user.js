@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Last Name is required"],
     },
 
+    about : {
+        type: String,
+    
+    },
     avatar: {
         type: String,
     },

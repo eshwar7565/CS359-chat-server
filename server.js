@@ -63,7 +63,7 @@ io.on("connection", async (socket) => {
         await User.findByIdAndUpdate(user_id, { socket_id: socket.id, status: "Online" });
   
     }
-
+ 
     // We can write our socket event listeners in here...
     socket.on("friend_request", async (data) => {
         const to = await User.findById(data.to).select("socket_id");
