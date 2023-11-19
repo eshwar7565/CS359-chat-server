@@ -12,7 +12,6 @@ const sendSGMail = async ({
 }) => {
     try {
         const from = "eshwarrachakonda02@gmail.com";
-
         const msg = {
             to: to, // Change to your recipient
             from: from, // Change to your verified sender
@@ -21,14 +20,11 @@ const sendSGMail = async ({
             // text: text,
             attachments,
         };
-
-
-        return sgMail.send(msg);
+         return sgMail.send(msg);
     } catch (error) {
         console.log(error);
     }
 };
-
 exports.sendEmail = async (args) => {
     if (!process.env.NODE_ENV === "development") {
         return Promise.resolve();
