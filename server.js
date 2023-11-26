@@ -54,10 +54,10 @@ server.listen(port, () => {
 // Add this
 // Listen for when the client connects via socket.io-client
 io.on("connection", async (socket) => {
-    console.log(JSON.stringify(socket.handshake.query));
+    //  // console.log //(JSON.stringify(socket.handshake.query)); 
     const user_id = socket.handshake.query["user_id"];
 
-    console.log(`User connected ${socket.id}`);
+    // console.log(`User connected ${socket.id}`); 
  
     if (user_id != null && Boolean(user_id)) {
 
@@ -94,10 +94,10 @@ io.on("connection", async (socket) => {
 
     socket.on("accept_request", async (data) => {
         // accept friend request => add ref of each other in friends array
-        console.log(data);
+        // console.log(data);
         const request_doc = await FriendRequest.findById(data.request_id);
 
-        console.log(request_doc);
+        // console.log(request_doc);
 
         const sender = await User.findById(request_doc.sender);
         const receiver = await User.findById(request_doc.recipient);
@@ -128,7 +128,7 @@ io.on("connection", async (socket) => {
 
     // db.books.find({ authors: { $elemMatch: { name: "John Smith" } } })
 
-    console.log(existing_conversations);
+    // console.log(existing_conversations); 
 
     callback(existing_conversations);
   });
@@ -145,7 +145,7 @@ socket.on("start_conversation", async (data) => {
       participants: { $size: 2, $all: [to, from] },
     }).populate("participants", "firstName lastName _id email status");
 
-    console.log(existing_conversations[0], "Existing Conversation");
+    // console.log(existing_conversations[0], "Existing Conversation"); 
 
     // if no => create a new OneToOneMessage doc & emit event "start_chat" & send conversation details as payload
     if (existing_conversations.length === 0) {
@@ -181,7 +181,7 @@ socket.on("start_conversation", async (data) => {
 
     // Handle incoming text/link messages
     socket.on("text_message", async (data) => {
-        console.log("Received message:", data);
+        // console.log("Received message:", data);
 
         // data: {to, from, text}
 
@@ -209,7 +209,7 @@ socket.on("start_conversation", async (data) => {
         // emit incoming_message -> to user
 
 
-          console.log("Will emit the message");
+          // console.log("Will emit the message");
         io.to(to_user?.socket_id).emit("new_message", {
             conversation_id,
             message: new_message,
